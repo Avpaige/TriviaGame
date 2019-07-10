@@ -4,6 +4,11 @@ $(document).ready(function(){
     var incorrect =0;
     var unaswered = 0;
 
+    $("#a").attr("data-value", "a");
+    $("#b").attr("data-value", "b");
+    $("#c").attr("data-value", "c"); 
+    $("#d").attr("data-value", "d");
+
     var questions = [
         {   prompt: "Which of the following films was NOT directed by Kevin Smith?",
             
@@ -12,7 +17,7 @@ $(document).ready(function(){
             c: "Superbad",
             d: "Dogma",
     
-            answer: a,
+            answer: "a",
             right: "Correct! Kevin Smith has a lot of cult classics to his credits, but Superbad is NOT one of them!",
             wrong: "Wrong! The correct answer is Superbad!",
             },
@@ -24,7 +29,7 @@ $(document).ready(function(){
             c: "The Mighty Ducks",
             d: "The Big Green",
 
-            answer: c,
+            answer: "c",
             right: "Correct! Ducks fly together!",
             wrong: "Wrong! Quack, Quack, Quack! The correct answer is The Mighty Ducks!",
         },
@@ -36,7 +41,7 @@ $(document).ready(function(){
             c: "Mandalay Bay",
             d: "MGM Grand",
 
-            answer: c,
+            answer: "c",
             right: "Correct! The Madalay Bay avoided being hit by Ocean's 11!",
             wrong: "Wrong! The correct answer is Mandalay Bay!",
          },
@@ -48,7 +53,7 @@ $(document).ready(function(){
             c: "Nicholas Sparks",
             d: "John Green",
 
-            answer: a,
+            answer: "a",
             right: "Correct! Stephen King is responsbile for the legendary character Andy Dufresne!",
             wrong: "Wrong! It may not be his scariest novel but Stephen King is the correct answer!",
         },
@@ -60,22 +65,22 @@ $(document).ready(function(){
             c: "Saturday",
             d: "Friday After Next",
 
-            answer: d,
+            answer: "d",
             right: "Correct! Friday After Next was released in 2002!",
             wrong: "Wrong! Friday After Next is the correct answer!",
            },
 
-        //    {  prompt: "",
+           {  prompt: "In Mean Girls, what color do the Plastics, wear on Wednesdays?",
     
-        //     a: "",
-        //     b: "",
-        //     c: "",
-        //     d: "",
+            a: "Purple",
+            b: "Red",
+            c: "Pink",
+            d: "White",
 
-        //     answer: ,
-        //     right: "",
-        //     wrong: "",
-        //    },
+            answer: "c",
+            right: "Correct! Get in loser, we're going shopping!",
+            wrong: "Wrong! On Wednesday's we wear pink! Stop trying to make fetch happen",
+           },
 
         //    {  prompt: "",
     
@@ -145,8 +150,9 @@ var start = function (){
         $("#c").html(questions[i].c);
         $("#d").html(questions[i].d);
 
-        var response = $(button).on("click", function (){
-        if (tbutton.value == questions[i].answer) {
+    $(".btn").on("click", function (){
+    var response = $(this);
+        if (response == questions[i].answer) {
             correct++; 
             $("#question").html(questions[i].right);
         } else if (response != questions[i].answer){
@@ -154,7 +160,7 @@ var start = function (){
             $("#question").html(questions[i].wrong);
         } else (response === false) 
             unaswered++;
-console.log("response is " + response)
+
         });
 
         }
