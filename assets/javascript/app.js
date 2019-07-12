@@ -3,6 +3,9 @@ $(document).ready(function(){
     var correct = 0;
     var incorrect =0;
     var unaswered = 0;
+    var time = 10;
+    var intervalId;
+    var clockRunning = false;
 
     $("#a").attr("data-value", "a");
     $("#b").attr("data-value", "b");
@@ -133,48 +136,64 @@ $(document).ready(function(){
         },
         ]
     //press start to start game
-    //create thirty second interval per question
-    //create an array of question objects with answers
-    //determine right answer/wrong answer
-    //track total right/wrong/unaswered questions
-    //give 30 seconds to answer    
-        //when theres a click reset timer 
-    //when question timer runs out, show out of time and then move on to next question
+        //track total right/wrong/unaswered questions
     //after 30 seconds display new question (for loop with interval maybe?)
-
+    //end game after set amount of time
+    //get score board 
     //start over resets the game but does NOT reload the page
-   
-
-var start = function (){
     var randomQuestionIndex = Math.floor( Math.random() * questions.length);
-    var chosenQuestion = questions[randomQuestionIndex]
+    var chosenQuestion = questions[randomQuestionIndex] 
+    
+function time() {
+    clearInterval(intervalId);
+    intervalId = setInterval(clock, 1000);
+}
+
+
+function reset()  {
+    randomQuestionIndex = Math.floor( Math.random() * questions.length);
+    chosenQuestion = questions[randomQuestionIndex]
     $("#question").html(chosenQuestion.prompt);
     $("#a").html(chosenQuestion.a);
     $("#b").html(chosenQuestion.b);
     $("#c").html(chosenQuestion.c);
     $("#d").html(chosenQuestion.d);
+     time=10;
 }
-    $(".btn").on("click", function (){
-    var response = $(this).attr("data-value");
 
-    if (response === chosenQuestion.answer){
-            correct++; 
+function clock(){
+    time--;
+    $("#time").html("Seconds Remaining " + time);
+    clockRunning = true;
+        if (time===0){
+           reset();
+      }
+}
 
-console.log(this)
-console.log("this is answer value after click")
+var start = function (){
+    if (!clockRunning) {
+        intervalId = setInterval(clock, 1000);
+        clockRunning = true;
+    }
+    
+        reset();
 
-            $("#question").html(chosenQuestion.right);
-        } else if (response != chosenQuestion.answer){
-            incorrect++;
-            $("#question").html(chosenQuestion.wrong);
-        } else (response === false) 
-            unaswered++;
-
+        $(".btn").on("click", function (){
+            var response = $(this).attr("data-value");
+            if (response === chosenQuestion.answer){
+                    $("#question").html(chosenQuestion.right);
+                    correct++;
+            } else if (response != chosenQuestion.answer){
+                    incorrect++;
+                    $("#question").html(chosenQuestion.wrong);
+            } else (response === false) 
+                    unaswered++;
+                
         });
-
+}
         
 console.log ("correct is : " + correct)
-console.log ("correct is : " + incorrect)
+console.log ("incorrect is : " + incorrect)
 console.log ("unansered is :" + unaswered)
 
 start();
