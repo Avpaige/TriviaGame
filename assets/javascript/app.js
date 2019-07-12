@@ -20,6 +20,7 @@ $(document).ready(function(){
             answer: "a",
             right: "Correct! Kevin Smith has a lot of cult classics to his credits, but Superbad is NOT one of them!",
             wrong: "Wrong! The correct answer is Superbad!",
+        
             },
     
             {  prompt: "Which of the following films IS a triology?", 
@@ -32,6 +33,7 @@ $(document).ready(function(){
             answer: "c",
             right: "Correct! Ducks fly together!",
             wrong: "Wrong! Quack, Quack, Quack! The correct answer is The Mighty Ducks!",
+          
         },
 
             {  prompt: "Which of the following casinos is NOT robbed during Ocean's 11?",
@@ -141,6 +143,7 @@ $(document).ready(function(){
     //after 30 seconds display new question (for loop with interval maybe?)
 
     //start over resets the game but does NOT reload the page
+   
 
 var start = function (){
     for (var i=0; i< questions.length; i++){
@@ -151,9 +154,14 @@ var start = function (){
         $("#d").html(questions[i].d);
 
     $(".btn").on("click", function (){
-    var response = $(this);
-        if (response == questions[i].answer) {
+    var response = $(this).attr("data-value");
+
+        if (response === questions[i].answer){
             correct++; 
+
+console.log(questions[i].answer)
+console.log("this is answer value after click")
+
             $("#question").html(questions[i].right);
         } else if (response != questions[i].answer){
             incorrect++;
@@ -166,9 +174,7 @@ var start = function (){
         }
     }
 console.log ("correct is : " + correct)
-
 console.log ("correct is : " + incorrect)
-
 console.log ("unansered is :" + unaswered)
 
 start();
