@@ -9,8 +9,8 @@ font-family: sans-serif;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-    height: 800px;
-    width: 800px;
+    height: 900px;
+    width: 900px;
 }
 
 .header{
@@ -23,14 +23,14 @@ font-family: sans-serif;
     font-size: 50px;
     color: white;
     position: relative;
-    bottom: -150px;
+    bottom: -175px;
 
 }
 
 #time {
     position: relative;
-    top: -775px;
-    right: -800px;
+    top: -875px;
+    right: -850px;
     background: rgb(190, 159, 16);
     height: 90px;
     width: 205px;
@@ -65,14 +65,21 @@ font-family: sans-serif;
     border-radius: 25px;     
     background: radial-gradient(rgb(212, 185, 185), #aa9fdb75);
     font-weight: bold;
+    color:red;
+    position: relative;
+    top: -50px;
+
 }
 
 #question{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     padding-bottom: 30px;
-    padding-top: 20px;
     text-align: center;
+    width: 500px;
+    position: relative;
+    left: -50px;
+    top: -50px;
 }
 
 .btn:hover{
@@ -82,9 +89,21 @@ font-family: sans-serif;
 
 }
 
+.gif{
+    padding-top: 40px;
+    width: 400px;
+    height: 200px;
+    position: relative;
+    padding: auto;
 
 
+}
 
+
+#question{
+    color: blue;
+
+}
 /* 
 .box{
     font-family:sans-serif;

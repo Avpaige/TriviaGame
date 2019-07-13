@@ -6,9 +6,8 @@ $(document).ready(function(){
     var time = 10;
     var intervalId;
     var clockRunning = false;
-    var outTime = "You're out of time!"
+ 
     var gameTime = 180;
-    var endGame = "..assets/images/quicker.gif"
 
     $(".gif").hide()
     
@@ -18,6 +17,10 @@ $(document).ready(function(){
     $("#d").attr("data-value", "d");
 
     var questions = [
+        { endGame: "..assets/images/quicker.gif",
+          outTime:  "You're out of time!",
+        },
+
         {   prompt: "Which of the following films was NOT directed by Kevin Smith?",
             
             a: "Jersey Girl",
@@ -28,7 +31,7 @@ $(document).ready(function(){
             answer: "a",
             right: "Correct! Kevin Smith has a lot of cult classics to his credits, but Superbad is NOT one of them!",
             wrong: "Wrong! The correct answer is Superbad!",
-          
+            gif: "./assets/images/smith2.webp"
 
             },
     
@@ -42,7 +45,7 @@ $(document).ready(function(){
             answer: "c",
             right: "Correct! Ducks fly together!",
             wrong: "Wrong! Quack, Quack, Quack! The correct answer is The Mighty Ducks!",
-            gif:  "<img src=./assets/images/ducks.gif"
+            gif:  "./assets/images/ducks.gif"
         },
 
             {  prompt: "Which of the following casinos is NOT robbed during Ocean's 11?",
@@ -55,6 +58,7 @@ $(document).ready(function(){
             answer: "c",
             right: "Correct! The Madalay Bay avoided being hit by Ocean's 11!",
             wrong: "Wrong! The correct answer is Mandalay Bay!",
+            gif:  "./assets/images/oceans.webp"
          },
 
             {  prompt: "Who wrote the novel that The Shawshank Redemption is adapted from?",
@@ -67,6 +71,7 @@ $(document).ready(function(){
             answer: "a",
             right: "Correct! Stephen King is responsbile for the legendary character Andy Dufresne!",
             wrong: "Wrong! It may not be his scariest novel but Stephen King is the correct answer!",
+            gif:  "./assets/images/andy.webp"
         },
     
            {  prompt: "Which of the following is a real title from the FRIDAY franchise?",
@@ -79,6 +84,7 @@ $(document).ready(function(){
             answer: "d",
             right: "Correct! Friday After Next was released in 2002!",
             wrong: "Wrong! Friday After Next is the correct answer!",
+            gif:  "./assets/images/friday.webp"
         },
 
            {  prompt: "In Mean Girls, what color do the Plastics, wear on Wednesdays?",
@@ -90,7 +96,8 @@ $(document).ready(function(){
 
             answer: "c",
             right: "Correct! Get in loser, we're going shopping!",
-            wrong: "Wrong! On Wednesday's we wear pink! Stop trying to make fetch happen",
+            wrong: "Wrong! On Wednesday's we wear pink! Stop trying to make fetch happen!",
+            gif:  "./assets/images/mean.webp"
         },
 
            {  prompt: "What is the name of the Head Elf in The Santa Clause?",
@@ -103,6 +110,7 @@ $(document).ready(function(){
             answer: "b",
             right: "Correct! You might as well put on the suit!",
             wrong: "Wrong! You clear have never seen Bernard's sweater game!",
+            gif:  "./assets/images/bernards.webp"
         },
 
            {  prompt: "Which of the following is NOT a Bruce Willis film?",
@@ -115,6 +123,7 @@ $(document).ready(function(){
             answer: "d",
             right: "Correct! 3 Days to Kill IS a movie but Bruce Willis isn't in it!",
             wrong: "Wrong! Bruce Willis has been in a lot of movies, but not 3 Days to Kill!",
+            gif:  "./assets/images/bruce.webp"
         },
 
            {  prompt: "What is the name of the ficitional town where Sixteen Candles, Pretty in Pink, Weird Science and The Breakfast Club all take place? ",
@@ -127,6 +136,7 @@ $(document).ready(function(){
             answer: "a",
             right: "Correct! You know better than to head to Shermer!",
             wrong: "Wrong! Shermer, IL is the correct answer!",
+            gif:  "./assets/images/bender.webp"
         },
 
            {  prompt: "Not including the latest Creed movies, how many films are in the Rocky franchise?",
@@ -138,7 +148,8 @@ $(document).ready(function(){
 
             answer: "d",
             right: "Correct! Adrian, knows she can count on you!",
-            wrong: "Wrong! There are 5 films in the Rocky franchise! That's a lot of punchses!",
+            wrong: "Wrong! There are 5 films in the Rocky franchise! That's a lot of punches!",
+            gif:  "./assets/images/rocky.webp"
         },
         ]
     //press start to start game
@@ -181,13 +192,21 @@ function clock(){
     clockRunning = true;
         if (time===0){//CURRENTLY WORKING BUT ONLY ON FIRST UNANSWERED QUESTION
             unanswered++;
-         $("#question").html(outTime + endGame);
+         $("#question").html(questions.outTime);
          stopClock();
          $(".btn").hide();
+        var img = $("<img>");
+        img.attr("src" , questions.endGame);
+        img.addClass("gif");
+        $("#question").append(img); 
                                                             console.log ("unanwsered is :" + unanswered)
         }else if (gameTime===0){
         $("#question").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered + endGame);
         $(".btn").hide();
+        var img = $("<img>");
+        img.attr("src" , questions.endGame);
+        img.addClass("gif");
+        $("#question").append(img); 
     }
 
 }
@@ -205,41 +224,46 @@ function stopClock(){
     }
 }
 
+//ON page load:
+    $(".btn").hide();
+    $("#time").hide();
+
 var start = function (){
     if (!clockRunning) {
         intervalId = setInterval(clock, 1000);
         clockRunning = true;
     }
     
-        reset();
-
         $(".btn").on("click", function (){
             var response = $(this).attr("data-value");
+            $(".btn").hide();
+            var img = $("<img>");
+            img.attr("src" , chosenQuestion.gif);
+            img.addClass("gif");    
+
             if (response === chosenQuestion.answer){
-                    $("#question").html(chosenQuestion.right + chosenQuestion.gif);
-                    $(".btn").hide();
                     correct++;
                     stopClock();    
-                    gameTime=gameTime-time;     
-                                                    console.log ("correct is : " + correct)
-                                                    console.log("Gametime when right: " + gameTime)
+                    gameTime=gameTime-time;   
+                    $("#question").html(chosenQuestion.right);
+                    $("#question").append(img);
             } else if (response != chosenQuestion.answer){
                     incorrect++;
-                    $("#question").html(chosenQuestion.wrong + chosenQuestion.gif);
                     stopClock();
-                    $(".btn").hide();
                     gameTime=gameTime-time;
-                                                    console.log ("incorrect is : " + incorrect)   
-                                                    console.log("Gametime when wrong is: " + gameTime)
+                    $("#question").html(chosenQuestion.wrong);
+                    $("#question").append(img);
            }                 
         });
-
-        console.log("Gametime is: " + gameTime)
 }
-        
+       //When you click on start: 
+            $(".start").on("click", function(){
+                    start();
+                    reset();
+                    $(".start").hide();
+                    $("#time").show();
+            });
 
-
-start();
 });
 
 

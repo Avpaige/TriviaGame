@@ -204,8 +204,6 @@ var start = function (){
         clockRunning = true;
     }   
 
-    reset();
-
 //Triggers click event for start button to begin the game and hide the start button   
 
         (".btn").on("click", function (){
