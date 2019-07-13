@@ -2,10 +2,11 @@ $(document).ready(function(){
     
     var correct = 0;
     var incorrect =0;
-    var unaswered = 0;
+    var unanswered = 0;
     var time = 10;
     var intervalId;
     var clockRunning = false;
+    var clicked = false;
 
     $("#a").attr("data-value", "a");
     $("#b").attr("data-value", "b");
@@ -134,7 +135,9 @@ $(document).ready(function(){
             right: "Correct! Adrian, knows she can count on you!",
             wrong: "Wrong! There are 5 films in the Rocky franchise! That's a lot of punchses!",
         },
-        ]
+]
+
+var outTime = "You're out of time!"
     //press start to start game
         //track total right/wrong/unaswered questions
     //after 30 seconds display new question (for loop with interval maybe?)
@@ -149,7 +152,7 @@ function time() {
     intervalId = setInterval(clock, 1000);
 }
 
-
+//Fcnt shows random question and updates question timer start point
 function reset()  {
     randomQuestionIndex = Math.floor( Math.random() * questions.length);
     chosenQuestion = questions[randomQuestionIndex]
@@ -159,45 +162,79 @@ function reset()  {
     $("#c").html(chosenQuestion.c);
     $("#d").html(chosenQuestion.d);
      time=10;
+     $("#time").show();
 }
 
+//Fcnt resets for new game
+function newGame(){
+    reset ();
+    correct = 0;
+    incorrect =0;
+    unanswered = 0;
+    time = 10;
+    intervalId;
+    clockRunning = false;
+    clicked = false;
+
+}
+
+//Fcnt delays reset to read right/wrong prompt before next question
+var delayReset = setTimeout (function(){
+    reset()},1000*15);  
+
+function delay () { delayReset };
+
+//Fcnt runs the clock and triggers the reset delay when question time hits 0
 function clock(){
     time--;
-    $("#time").html("Seconds Remaining " + time);
+    $("#time").html("Time Remaining " + time);
     clockRunning = true;
         if (time===0){
-           reset();
-      }
+        delayReset;
+        $("#question").html(outTime);
+        unanswered++;
+        console.log ("unansered is :" + unanswered)
+        }
 }
 
+//Fcnt starts the clock and sets the interval
 var start = function (){
     if (!clockRunning) {
         intervalId = setInterval(clock, 1000);
         clockRunning = true;
-    }
-    
-        reset();
+    }   
 
-        $(".btn").on("click", function (){
+    reset();
+
+//Triggers click event for start button to begin the game and hide the start button   
+
+        (".btn").on("click", function (){
             var response = $(this).attr("data-value");
+            click = true;
             if (response === chosenQuestion.answer){
                     $("#question").html(chosenQuestion.right);
-                    correct++;
+                    clockRunning = false;
+                    correct = correct +1;
             } else if (response != chosenQuestion.answer){
                     incorrect++;
                     $("#question").html(chosenQuestion.wrong);
-            } else (response === false) 
-                    unaswered++;
-                
+                    delay();
+            }    
+            
+            console.log ("correct is : " + correct)
+            console.log ("incorrect is : " + incorrect)
+            console.log ("unansered is :" + unanswered)
         });
-}
-        
-console.log ("correct is : " + correct)
-console.log ("incorrect is : " + incorrect)
-console.log ("unansered is :" + unaswered)
 
-start();
+
+        start();  
+      
 });
+        
+
+
+
+
 
 
    
