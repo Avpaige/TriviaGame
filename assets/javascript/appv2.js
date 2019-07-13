@@ -8,7 +8,10 @@ $(document).ready(function(){
     var clockRunning = false;
     var outTime = "You're out of time!"
     var gameTime = 180;
+    var endGame = "..assets/images/quicker.gif"
 
+    $(".gif").hide()
+    
     $("#a").attr("data-value", "a");
     $("#b").attr("data-value", "b");
     $("#c").attr("data-value", "c"); 
@@ -25,7 +28,8 @@ $(document).ready(function(){
             answer: "a",
             right: "Correct! Kevin Smith has a lot of cult classics to his credits, but Superbad is NOT one of them!",
             wrong: "Wrong! The correct answer is Superbad!",
-        
+          
+
             },
     
             {  prompt: "Which of the following films IS a triology?", 
@@ -38,7 +42,7 @@ $(document).ready(function(){
             answer: "c",
             right: "Correct! Ducks fly together!",
             wrong: "Wrong! Quack, Quack, Quack! The correct answer is The Mighty Ducks!",
-          
+            gif:  "<img src=./assets/images/ducks.gif"
         },
 
             {  prompt: "Which of the following casinos is NOT robbed during Ocean's 11?",
@@ -159,35 +163,46 @@ function reset()  {
     $("#b").html(chosenQuestion.b);
     $("#c").html(chosenQuestion.c);
     $("#d").html(chosenQuestion.d);
+    $(".btn").show();
      time=10;
 }
 
 var delayReset = setTimeout (function(){
-    reset()},1000*15);  
+    reset(); 
+    start();
+},1000*15);  
 
 function delay () { delayReset };
 
 function clock(){
     time--;
     gameTime=gameTime-time;
-    $("#time").html("Seconds Remaining " + time);
+    $("#time").html("Question Timer: " + time);
     clockRunning = true;
-        if (time===0){
+        if (time===0){//CURRENTLY WORKING BUT ONLY ON FIRST UNANSWERED QUESTION
             unanswered++;
-            $("#question").html(outTime);
-         console.log ("unanwsered is :" + unanswered)
+         $("#question").html(outTime + endGame);
          stopClock();
+         $(".btn").hide();
+                                                            console.log ("unanwsered is :" + unanswered)
         }else if (gameTime===0){
-        $("#question").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered);
+        $("#question").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered + endGame);
+        $(".btn").hide();
     }
+
 }
 
 function stopClock(){
     time=time;
-    $("#time").html("Seconds Remaining " + time);
+    $("#time").html("Question Timer: " + time);
     clockRunning = false;
     clearInterval(intervalId);
-    delay();
+    if (gameTime >0){
+        delayReset = setTimeout (function(){
+            reset(); 
+            start();
+        },1000*10);    
+    }
 }
 
 var start = function (){
@@ -201,20 +216,21 @@ var start = function (){
         $(".btn").on("click", function (){
             var response = $(this).attr("data-value");
             if (response === chosenQuestion.answer){
-                    $("#question").html(chosenQuestion.right);
+                    $("#question").html(chosenQuestion.right + chosenQuestion.gif);
+                    $(".btn").hide();
                     correct++;
                     stopClock();    
                     gameTime=gameTime-time;     
-                console.log ("correct is : " + correct)
-                console.log("Gametime when right: " + gameTime)
+                                                    console.log ("correct is : " + correct)
+                                                    console.log("Gametime when right: " + gameTime)
             } else if (response != chosenQuestion.answer){
                     incorrect++;
-                    $("#question").html(chosenQuestion.wrong);
+                    $("#question").html(chosenQuestion.wrong + chosenQuestion.gif);
                     stopClock();
+                    $(".btn").hide();
                     gameTime=gameTime-time;
-                    delay();
-                console.log ("incorrect is : " + incorrect)   
-                console.log("Gametime when wrong is: " + gameTime)
+                                                    console.log ("incorrect is : " + incorrect)   
+                                                    console.log("Gametime when wrong is: " + gameTime)
            }                 
         });
 
