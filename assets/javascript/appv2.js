@@ -6,21 +6,19 @@ $(document).ready(function(){
     var time = 10;
     var intervalId;
     var clockRunning = false;
- 
-    var gameTime = 180;
+    var gameRunning = false;
+    var outTime =  "You took too long to answer!";
+    var gameTime = 30;
+    var delayReset;
+    var selected = [];
 
     $(".gif").hide()
-    
     $("#a").attr("data-value", "a");
     $("#b").attr("data-value", "b");
     $("#c").attr("data-value", "c"); 
     $("#d").attr("data-value", "d");
 
     var questions = [
-        { endGame: "..assets/images/quicker.gif",
-          outTime:  "You're out of time!",
-        },
-
         {   prompt: "Which of the following films was NOT directed by Kevin Smith?",
             
             a: "Jersey Girl",
@@ -152,8 +150,6 @@ $(document).ready(function(){
             gif:  "./assets/images/rocky.webp"
         },
         ]
-    //press start to start game
-        //track total right/wrong/unaswered questions
     //after 30 seconds display new question (for loop with interval maybe?)
     //end game after set amount of time
     //get score board 
@@ -166,67 +162,102 @@ function time() {
     intervalId = setInterval(clock, 1000);
 }
 
+function gameTime() {
+    clearInterval(intervalId);
+    intervalId = setInterval(game, 1000);
+}
+
+
+//try creating seperate game clock to end the game
+//time end of that clock independtely to display of scoreboard and restart butotn
+
 function reset()  {
-    randomQuestionIndex = Math.floor( Math.random() * questions.length);
+randomQuestionIndex = Math.floor( Math.random() * questions.length);
     chosenQuestion = questions[randomQuestionIndex]
-    $("#question").html(chosenQuestion.prompt);
-    $("#a").html(chosenQuestion.a);
-    $("#b").html(chosenQuestion.b);
-    $("#c").html(chosenQuestion.c);
-    $("#d").html(chosenQuestion.d);
+    $("#question").text(chosenQuestion.prompt);
+    $("#a").text(chosenQuestion.a);
+    $("#b").text(chosenQuestion.b);
+    $("#c").text(chosenQuestion.c);
+    $("#d").text(chosenQuestion.d);
     $(".btn").show();
-     time=10;
-}
+    time = 10;
+  }
 
-var delayReset = setTimeout (function(){
-    reset(); 
-    start();
-},1000*15);  
 
-function delay () { delayReset };
-
-function clock(){
-    time--;
-    gameTime=gameTime-time;
-    $("#time").html("Question Timer: " + time);
-    clockRunning = true;
-        if (time===0){//CURRENTLY WORKING BUT ONLY ON FIRST UNANSWERED QUESTION
-            unanswered++;
-         $("#question").html(questions.outTime);
-         stopClock();
-         $(".btn").hide();
-        var img = $("<img>");
-        img.attr("src" , questions.endGame);
-        img.addClass("gif");
-        $("#question").append(img); 
-                                                            console.log ("unanwsered is :" + unanswered)
-        }else if (gameTime===0){
-        $("#question").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered + endGame);
-        $(".btn").hide();
-        var img = $("<img>");
-        img.attr("src" , questions.endGame);
-        img.addClass("gif");
-        $("#question").append(img); 
-    }
-
-}
 
 function stopClock(){
     time=time;
     $("#time").html("Question Timer: " + time);
     clockRunning = false;
+    gameRunning = false;
     clearInterval(intervalId);
-    if (gameTime >0){
+    if (gameTime > 1){
         delayReset = setTimeout (function(){
-            reset(); 
+            reset();
             start();
-        },1000*10);    
+        },1000*8);  
+        
     }
 }
+
+function newGame(){
+    correct = 0;
+    incorrect =0;
+    unanswered = 0;
+    time = 10;
+    clockRunning = false;
+    gameRunning = false;
+    gameTime = 30;
+    reset();
+    start();
+}
+
+$(".new").on("click", function (){
+    newGame();
+});
+
+
+function clock(){
+    time--;
+    gameTime--;
+    $("#time").html("Question Timer: " + time);
+    clockRunning = true;
+    gameRunning = true;
+    if (gameTime===0 && time===0){
+        $("#score").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered + endGame);
+        $(".btn").hide();
+        $(".score").show();
+        $(".new").show();
+        var img = $("<img>");
+        img.attr("src" , questions.endGame);
+        img.addClass("gif");
+        $("#question").append(img); 
+        stopClock();
+    }else if (time===0){
+        unanswered++;
+        stopClock();
+        delayReset = setTimeout (function(){
+            reset();
+            start();
+        },1000*8); 
+        gameTime=gameTime-time;
+        $("#question").text(outTime);
+        $(".btn").hide();
+        var img = $("<img>");
+        img.attr("src" , "./assets/images/quicker.gif");
+        img.addClass("gif");
+        $("#question").append(img); 
+                                                              
+}
+
+}
+
 
 //ON page load:
     $(".btn").hide();
     $("#time").hide();
+    $(".score").hide();
+    $("#new").hide();
 
 var start = function (){
     if (!clockRunning) {
@@ -240,19 +271,28 @@ var start = function (){
             var img = $("<img>");
             img.attr("src" , chosenQuestion.gif);
             img.addClass("gif");    
-
             if (response === chosenQuestion.answer){
                     correct++;
                     stopClock();    
-                    gameTime=gameTime-time;   
                     $("#question").html(chosenQuestion.right);
                     $("#question").append(img);
+                    delayReset = setTimeout (function(){
+                        reset();
+                        start();
+                    },1000*8); 
+                    gameTime= gameTime-time;
+                    console.log(gameTime +"is game time left")
             } else if (response != chosenQuestion.answer){
                     incorrect++;
                     stopClock();
-                    gameTime=gameTime-time;
                     $("#question").html(chosenQuestion.wrong);
                     $("#question").append(img);
+                    delayReset = setTimeout (function(){
+                        reset();
+                        start();
+                    },1000*8); 
+                    gameTime= gameTime-time;
+                    console.log(gameTime +"is game time left")
            }                 
         });
 }
