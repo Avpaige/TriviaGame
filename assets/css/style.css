@@ -64,10 +64,26 @@ font-family: sans-serif;
     border-radius: 25px;     
     background: radial-gradient(rgb(212, 185, 185), #aa9fdb75);
     font-weight: bold;
-    color:red;
+    color:blue;
     top: -50px;
     position: relative;
-    margin-right: 3000px;
+    left: -350px;
+
+}
+
+
+#new{
+    height: 40px;
+    width:  200px;
+    font-size: 20px;
+    border-radius: 25px;     
+    background: radial-gradient(rgb(212, 185, 185), #aa9fdb75);
+    font-weight: bold;
+    color:blue;
+    top: -50px;
+    position: relative;
+    left: -350px;
+    margin-top: 100px;
 
 }
 
@@ -80,6 +96,7 @@ font-family: sans-serif;
     position: relative;
     left: -50px;
     top: -50px;
+    margin-top:30px;
 }
 
 .butn:hover{
@@ -92,9 +109,22 @@ font-family: sans-serif;
     color: white;
 }
 
+#new:hover{
+    background-color: rgb(190, 159, 16);
+    color: white;
+}
+
 
 .gif{
     padding-top: 20px;
+    width: 400px;
+    height: 200px;
+    position: relative;
+    padding: auto;
+}
+
+.gifTime{
+    margin-top: 100px;
     width: 400px;
     height: 200px;
     position: relative;
@@ -125,6 +155,18 @@ p{
 
 }
 
+.conan {
+    padding-top: 20px;
+    width: 400px;
+    height: 200px;
+    position: relative;
+    padding: auto;
+    left: -350px;
+    color: red;
+    font-size: 20px;
+    left: -500px;
+}
+
 #start{
     position: relative;
     left: -425px;
@@ -139,3 +181,12 @@ p{
     position: relative;
    
 }
+
+
+#score{
+    color: blue;
+    font-size: 20px;
+    left: -600px;
+    font-weight: bold;
+}
+

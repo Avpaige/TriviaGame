@@ -8,7 +8,7 @@ $(document).ready(function(){
     var clockRunning = false;
     var gameRunning = false;
     var outTime =  "You took too long to answer!";
-    var gameTime = 120;
+    var gameTime = 60;
     var delayReset;
     var selected = [];
 
@@ -168,8 +168,10 @@ function gameTime() {
 }
 
 
-//try creating seperate game clock to end the game
-//time end of that clock independtely to display of scoreboard and restart butotn
+//update css- especially on buttons and out of time gif/message
+//check game timer
+//add more questions to array
+//fix restart button NOT hiding on new gae restart
 
 function reset()  {
 randomQuestionIndex = Math.floor( Math.random() * questions.length);
@@ -203,19 +205,20 @@ function newGame(){
     correct = 0;
     incorrect =0;
     unanswered = 0;
-    time = 20;
+    time = 21;
     clockRunning = false;
     gameRunning = false;
-    gameTime = 120;
+    gameTime = 30;
     reset();
     start();
     time();
     gameTime();
     $("#new").hide();
     $(".btn").show();
-    $(".score").hide();
+    $("#score").hide();
     $("#time").show();
     $("p").show();
+   
 }
 
 $("#new").on("click", function (){
@@ -232,18 +235,21 @@ function clock(){
     gameRunning = true;
     console.log("gametime when clock function is called is: " + gameTime)
     if (gameTime===0){
-        $("#question").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered);
+        $("#score").html("This movie's over! Here's how you did!" + "<br>"+ "Right: " +  correct  + "<br>"+ "Wrong: " +  incorrect  +  + "<br>"+ "Unanswered: "  +  unanswered );
         $(".butn").hide();
-        $(".score").show();
+        $("#score").show();
         $("#new").show();
         $("#time").hide();
+        $("#question").hide();
         var img = $("<img>");
         img.attr("src" , "./assets/images/time.webp");
-        img.addClass("late");
-        $(".container").append(img); 
+        img.addClass("conan");
+        $("#score").append(img); 
         stopClock();
+        unanswered++;
         console.log("gametime when if 0 is triggered is: " + gameTime)
-    }else if (time===0){
+        console.log("n/a:" + unanswered)   
+}else if (time===0){
         unanswered++;
         stopClock();
         delayReset = setTimeout (function(){
@@ -255,7 +261,7 @@ function clock(){
         $("#time").hide();
         var img = $("<img>");
         img.attr("src" , "./assets/images/quicker.gif");
-        img.addClass("gif");
+        img.addClass("gifTime");
         $("#question").append(img);                                                             
         }
 
@@ -289,7 +295,9 @@ var start = function (){
                         start();
                     },1000*8); 
                     console.log("gametime when answer is correct: " + gameTime)
-            } else if (response != chosenQuestion.answer){
+                
+                    console.log("correct:" + correct) 
+            } else if (response != chosenQuestion.answer && time>0){
                     incorrect++;
                     stopClock();
                     $("#question").html(chosenQuestion.wrong);
@@ -299,6 +307,7 @@ var start = function (){
                         start();
                     },1000*8); 
                     console.log("gametime when answer is INcorrect: " + gameTime)
+                      console.log("INcorrect:" + incorrect)
            }                 
         });
 }
@@ -308,6 +317,9 @@ var start = function (){
                     reset();
                     $(".start").hide();
                     $("#time").show();
+
+                  
             });
+            
 
 });
