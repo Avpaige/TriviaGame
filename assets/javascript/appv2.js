@@ -8,7 +8,7 @@ $(document).ready(function(){
     var clockRunning = false;
     var gameRunning = false;
     var outTime =  "You took too long to answer!";
-    var gameTime = 30;
+    var gameTime = 15;
     var delayReset;
     var selected = [];
 
@@ -181,9 +181,8 @@ randomQuestionIndex = Math.floor( Math.random() * questions.length);
     $("#d").text(chosenQuestion.d);
     $(".btn").show();
     time = 10;
+    $("#time").show();
   }
-
-
 
 function stopClock(){
     time=time;
@@ -210,10 +209,18 @@ function newGame(){
     gameTime = 30;
     reset();
     start();
+    time();
+    gameTime();
+    $("#new").hide();
+    $(".btn").show();
+    $(".score").hide();
+    $("#time").show();
+
 }
 
-$(".new").on("click", function (){
+$("#new").on("click", function (){
     newGame();
+    $("#new").hide(); 
 });
 
 
@@ -223,16 +230,19 @@ function clock(){
     $("#time").html("Question Timer: " + time);
     clockRunning = true;
     gameRunning = true;
-    if (gameTime===0 && time===0){
-        $("#score").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered + endGame);
+    console.log("gametime when clock function is called is: " + gameTime)
+    if (gameTime===0){
+        $("#question").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered);
         $(".btn").hide();
         $(".score").show();
-        $(".new").show();
+        $("#new").show();
+        $("#time").hide();
         var img = $("<img>");
-        img.attr("src" , questions.endGame);
+        img.attr("src" , "./assets/images/time.webp");
         img.addClass("gif");
         $("#question").append(img); 
         stopClock();
+        console.log("gametime when if 0 is triggered is: " + gameTime)
     }else if (time===0){
         unanswered++;
         stopClock();
@@ -240,18 +250,16 @@ function clock(){
             reset();
             start();
         },1000*8); 
-        gameTime=gameTime-time;
         $("#question").text(outTime);
         $(".btn").hide();
+        $("#time").hide();
         var img = $("<img>");
         img.attr("src" , "./assets/images/quicker.gif");
         img.addClass("gif");
-        $("#question").append(img); 
-                                                              
-}
+        $("#question").append(img);                                                             
+        }
 
 }
-
 
 //ON page load:
     $(".btn").hide();
@@ -280,8 +288,7 @@ var start = function (){
                         reset();
                         start();
                     },1000*8); 
-                    gameTime= gameTime-time;
-                    console.log(gameTime +"is game time left")
+                    console.log("gametime when answer is correct: " + gameTime)
             } else if (response != chosenQuestion.answer){
                     incorrect++;
                     stopClock();
@@ -291,8 +298,7 @@ var start = function (){
                         reset();
                         start();
                     },1000*8); 
-                    gameTime= gameTime-time;
-                    console.log(gameTime +"is game time left")
+                    console.log("gametime when answer is INcorrect: " + gameTime)
            }                 
         });
 }
@@ -305,9 +311,3 @@ var start = function (){
             });
 
 });
-
-
-   
-
-    
-    
