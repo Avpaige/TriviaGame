@@ -40,7 +40,7 @@ font-family: sans-serif;
     color:white;
     font-weight: bold;
     text-align: center;
-    padding-top: 25px;
+    padding-top: 15px;
 }
 
 
@@ -57,17 +57,17 @@ font-family: sans-serif;
 
 }
 
-.btn{
+.butn{
     height: 40px;
     width:  200px;
     font-size: 20px;
-    margin-left: 100px;
     border-radius: 25px;     
     background: radial-gradient(rgb(212, 185, 185), #aa9fdb75);
     font-weight: bold;
     color:red;
-    position: relative;
     top: -50px;
+    position: relative;
+    margin-right: 3000px;
 
 }
 
@@ -82,25 +82,60 @@ font-family: sans-serif;
     top: -50px;
 }
 
-.btn:hover{
+.butn:hover{
     background-color: rgb(190, 159, 16);
     color: white;
-
-
 }
 
+#start:hover{
+    background-color: rgb(190, 159, 16);
+    color: white;
+}
+
+
 .gif{
-    padding-top: 40px;
+    padding-top: 20px;
     width: 400px;
     height: 200px;
     position: relative;
     padding: auto;
-
-
 }
 
+.late{
+    margin-top: 200px;
+    width: 400px;
+    height: 200px;
+    position: relative;
+    padding: auto;
+}
 
 #question{
     color: blue;
+    font-size: 20px;
+    left: -500px;
+}
 
+p{
+    color: blue;
+    position: relative;
+    left: -425px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+#start{
+    position: relative;
+    left: -425px;
+    height: 40px;
+    width:  200px;
+    font-size: 20px;
+    margin-left: 100px;
+    border-radius: 25px;     
+    background: radial-gradient(rgb(212, 185, 185), #aa9fdb75);
+    font-weight: bold;
+    color:blue;
+    position: relative;
+   
 }

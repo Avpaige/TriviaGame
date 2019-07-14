@@ -3,12 +3,12 @@ $(document).ready(function(){
     var correct = 0;
     var incorrect =0;
     var unanswered = 0;
-    var time = 10;
+    var time = 21;
     var intervalId;
     var clockRunning = false;
     var gameRunning = false;
     var outTime =  "You took too long to answer!";
-    var gameTime = 15;
+    var gameTime = 120;
     var delayReset;
     var selected = [];
 
@@ -26,7 +26,7 @@ $(document).ready(function(){
             c: "Superbad",
             d: "Dogma",
     
-            answer: "a",
+            answer: "c",
             right: "Correct! Kevin Smith has a lot of cult classics to his credits, but Superbad is NOT one of them!",
             wrong: "Wrong! The correct answer is Superbad!",
             gif: "./assets/images/smith2.webp"
@@ -179,8 +179,8 @@ randomQuestionIndex = Math.floor( Math.random() * questions.length);
     $("#b").text(chosenQuestion.b);
     $("#c").text(chosenQuestion.c);
     $("#d").text(chosenQuestion.d);
-    $(".btn").show();
-    time = 10;
+    $(".butn").show();
+    time = 21;
     $("#time").show();
   }
 
@@ -203,10 +203,10 @@ function newGame(){
     correct = 0;
     incorrect =0;
     unanswered = 0;
-    time = 10;
+    time = 20;
     clockRunning = false;
     gameRunning = false;
-    gameTime = 30;
+    gameTime = 120;
     reset();
     start();
     time();
@@ -215,7 +215,7 @@ function newGame(){
     $(".btn").show();
     $(".score").hide();
     $("#time").show();
-
+    $("p").show();
 }
 
 $("#new").on("click", function (){
@@ -233,14 +233,14 @@ function clock(){
     console.log("gametime when clock function is called is: " + gameTime)
     if (gameTime===0){
         $("#question").html("This movie's over! Here's how you did!" + "Right: " + correct + "Wrong: " + incorrect + "Unanswered: " + unanswered);
-        $(".btn").hide();
+        $(".butn").hide();
         $(".score").show();
         $("#new").show();
         $("#time").hide();
         var img = $("<img>");
         img.attr("src" , "./assets/images/time.webp");
-        img.addClass("gif");
-        $("#question").append(img); 
+        img.addClass("late");
+        $(".container").append(img); 
         stopClock();
         console.log("gametime when if 0 is triggered is: " + gameTime)
     }else if (time===0){
@@ -251,7 +251,7 @@ function clock(){
             start();
         },1000*8); 
         $("#question").text(outTime);
-        $(".btn").hide();
+        $(".butn").hide();
         $("#time").hide();
         var img = $("<img>");
         img.attr("src" , "./assets/images/quicker.gif");
@@ -262,7 +262,7 @@ function clock(){
 }
 
 //ON page load:
-    $(".btn").hide();
+    $(".butn").hide();
     $("#time").hide();
     $(".score").hide();
     $("#new").hide();
@@ -272,10 +272,10 @@ var start = function (){
         intervalId = setInterval(clock, 1000);
         clockRunning = true;
     }
-    
-        $(".btn").on("click", function (){
+    $("p").hide();
+        $(".butn").on("click", function (){
             var response = $(this).attr("data-value");
-            $(".btn").hide();
+            $(".butn").hide();
             var img = $("<img>");
             img.attr("src" , chosenQuestion.gif);
             img.addClass("gif");    
