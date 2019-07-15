@@ -8,7 +8,7 @@ $(document).ready(function(){
     var clockRunning = false;
     var gameRunning = false;
     var outTime =  "You took too long to answer!";
-    var gameTime = 10;
+    var gameTime = 61;
     var delayReset;
     var selected = [];
 
@@ -29,7 +29,7 @@ $(document).ready(function(){
             answer: "c",
             right: "Correct! Kevin Smith has a lot of cult classics to his credits, but Superbad is NOT one of them!",
             wrong: "Wrong! The correct answer is Superbad!",
-            gif: "./assets/images/smith2.webp"
+            gif: "./assets/images/smith2.webp",
 
             },
     
@@ -56,7 +56,7 @@ $(document).ready(function(){
             answer: "c",
             right: "Correct! The Madalay Bay avoided being hit by Ocean's 11!",
             wrong: "Wrong! The correct answer is Mandalay Bay!",
-            gif:  "./assets/images/oceans.webp"
+            gif:  "./assets/images/oceans.webp",
          },
 
             {  prompt: "Who wrote the novel that The Shawshank Redemption is adapted from?",
@@ -95,7 +95,7 @@ $(document).ready(function(){
             answer: "c",
             right: "Correct! Get in loser, we're going shopping!",
             wrong: "Wrong! On Wednesday's we wear pink! Stop trying to make fetch happen!",
-            gif:  "./assets/images/mean.webp"
+            gif:  "./assets/images/mean.webp",
         },
 
            {  prompt: "What is the name of the Head Elf in The Santa Clause?",
@@ -108,7 +108,7 @@ $(document).ready(function(){
             answer: "b",
             right: "Correct! You might as well put on the suit!",
             wrong: "Wrong! You clearly have never seen Bernard's sweater game!",
-            gif:  "./assets/images/bernards.webp"
+            gif:  "./assets/images/bernards.webp",
         },
 
            {  prompt: "Which of the following is NOT a Bruce Willis film?",
@@ -147,8 +147,71 @@ $(document).ready(function(){
             answer: "d",
             right: "Correct! Adrian, knows she can count on you!",
             wrong: "Wrong! There are 5 films in the Rocky franchise! That's a lot of punches!",
-            gif:  "./assets/images/rocky.webp"
+            gif:  "./assets/images/rocky.webp",
         },
+            {  prompt: "Who was the original voice of Chucky in Child's Play?",
+    
+            a: "Anthony Daniels",
+            b: "Brad Dourif",
+            c: "Mark Hamill",
+            d: "Kenny Baker",
+
+            answer: "b",
+            right: "Correct! Brad Douriff was the original voice of our favorite kid pyschopath!",
+            wrong: "Wrong! Until very recently Brad Dourif has been the original and long standing voice of Chucky!",
+            gif:  "./assets/images/chucky.webp",
+        },
+            {  prompt: "Which of the following movies has NOT been remade or rebooted?",
+        
+            a: "Flatliners",
+            b: "Jacob's Ladder",
+            c: "Pet Sematary",
+            d: "The Birds",
+
+            answer: "d",
+            right: "Correct! So far no one has tried to touch Alfred Hitchcock's classic!",
+            wrong: "Wrong! Alfred Hitchcock's The Birds is the only horror classic to remain untouched!",
+            gif:  "./assets/images/birds.webp",
+        },
+
+            {  prompt: "Who directed Interstellar?",
+        
+            a: "Christoper Nolan",
+            b: "Danny Boyle",
+            c: "Steven Spielberg",
+            d: "Stanley Kubrick",
+
+            answer: "a",
+            right: "Correct! Christopher Nolan brought us the tears of Matthew McConaughey for this trip to space!",
+            wrong: "Wrong! Christopher Nolan is responsible for this trip to space!",
+            gif:  "./assets/images/inter.gif",
+        },  
+
+            {  prompt: "Ruth E. Carter finally won an Academy Award for her work on Black Panther in which category?",
+        
+                a: "Costume Design",
+                b: "Production Design",
+                c: "Original Score",
+                d: "Makeup and Hair",
+
+                answer: "a",
+                right: "Correct! Wakanda Forever! ",
+                wrong: "Wrong! Ruth E. Carter brought us all the iconic costume designs of Wakanda!",
+                gif:  "./assets/images/black.gif",
+            },
+
+            {  prompt: "For A Star is Born, Bradley Cooper learned how to play guitar from which music icon's son?",
+    
+            a: "Patsy Kline",
+            b: "Willie Nelson",
+            c: "Johnny Cash",
+            d: "Hank Williams Jr.",
+
+            answer: "b",
+            right: "Correct! Lukas Nelson, son of Willie Nelson helped to get Bradley Cooper's riffs just right!",
+            wrong: "Wrong! Lukas Nelson, son of Willie Nelson helped to get Bradley Cooper's riffs just right!",
+            gif:  "./assets/images/star.webp",
+              },
         ]
 
     var randomQuestionIndex = Math.floor( Math.random() * questions.length);
@@ -190,19 +253,21 @@ function stopClock(){
         delayReset = setTimeout (function(){
             reset();
             start();
+            $("#slow").hide();
+            $("#question").show();  
         },1000*8);  
         
     }
 }
 
 function newGame(){
-    var correct = 0;
-    var incorrect =0;
-    var unanswered = 0;
+    correct = 0;
+    incorrect =0;
+    unanswered = 0;
     time = 21;
     clockRunning = false;
     gameRunning = false;
-    gameTime = 10;    
+    gameTime = 61;    
     $("#new").hide();
     $(".conan").hide();
     $(".btn").show();
@@ -227,36 +292,36 @@ function clock(){
     $("#time").html("Question Timer: " + time);
     clockRunning = true;
     gameRunning = true;
-    console.log("gametime when clock function is called is: " + gameTime)
     if (gameTime===0){
+        unanswered++;
         $("#score").html("This movie's over! Here's how you did!" + "<br>"+ "Right: " +  correct  + "<br>"+ "Wrong: " +  incorrect  +  "<br>" + "Unanswered: "  +  unanswered );
         $(".butn").hide();
         $("#score").show();
         $("#new").show();
         $("#time").hide();
         $("#question").hide();
+        $("#slow").hide();
         var img = $("<img>");
         img.attr("src" , "./assets/images/time.webp");
         img.addClass("conan");
         $("#score").append(img); 
         stopClock();
-        unanswered++;
-        console.log("gametime when if 0 is triggered is: " + gameTime)
-        console.log("n/a:" + unanswered)   
 }else if (time===0){
-        unanswered++;
         stopClock();
+        $("#question").hide();    
+        unanswered++;
         delayReset = setTimeout (function(){
             reset();
             start();
         },1000*8); 
-        $("#question").text(outTime);
+        $("#slow").text(outTime);
         $(".butn").hide();
         $("#time").hide();
         var img = $("<img>");
         img.attr("src" , "./assets/images/quicker.gif");
         img.addClass("gifTime");
-        $("#question").append(img);                                                             
+        $("#slow").append(img);     
+        $("#slow").show();                                                          
         }
 
 }
@@ -266,10 +331,16 @@ function clock(){
     $("#time").hide();
     $(".score").hide();
     $("#new").hide();
+    $("#slow").hide(); 
 
-
-
-    
+$(".butn").on("click", function (){
+       var response = $(this).attr("data-value");
+       if (response === chosenQuestion.answer){
+        correct++;
+       } else if (response != chosenQuestion.answer && time>0){
+            incorrect++;
+        }$("#slow").hide(); 
+}); 
 
 var start = function (){
     if (!clockRunning) {
@@ -284,7 +355,6 @@ var start = function (){
             img.attr("src" , chosenQuestion.gif);
             img.addClass("gif");    
             if (response === chosenQuestion.answer){
-                    correct++;
                     stopClock();    
                     $("#question").html(chosenQuestion.right);
                     $("#question").append(img);
@@ -292,11 +362,7 @@ var start = function (){
                         reset();
                         start();
                     },1000*8); 
-                    console.log("gametime when answer is correct: " + gameTime)
-                
-                    console.log("correct:" + correct) 
             } else if (response != chosenQuestion.answer && time>0){
-                    incorrect++;
                     stopClock();
                     $("#question").html(chosenQuestion.wrong);
                     $("#question").append(img);
@@ -304,8 +370,6 @@ var start = function (){
                         reset();
                         start();
                     },1000*8); 
-                    console.log("gametime when answer is INcorrect: " + gameTime)
-                      console.log("INcorrect:" + incorrect)
            }                 
         });
 }
@@ -318,6 +382,7 @@ var start = function (){
 
                   
             });
-            
+           console.log(gametime) 
+           console.log (chosenQuestion)
 
 });
