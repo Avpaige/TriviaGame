@@ -8,7 +8,7 @@ $(document).ready(function(){
     var clockRunning = false;
     var gameRunning = false;
     var outTime =  "You took too long to answer!";
-    var gameTime = 60;
+    var gameTime = 10;
     var delayReset;
     var selected = [];
 
@@ -107,7 +107,7 @@ $(document).ready(function(){
 
             answer: "b",
             right: "Correct! You might as well put on the suit!",
-            wrong: "Wrong! You clear have never seen Bernard's sweater game!",
+            wrong: "Wrong! You clearly have never seen Bernard's sweater game!",
             gif:  "./assets/images/bernards.webp"
         },
 
@@ -150,28 +150,22 @@ $(document).ready(function(){
             gif:  "./assets/images/rocky.webp"
         },
         ]
-    //after 30 seconds display new question (for loop with interval maybe?)
-    //end game after set amount of time
-    //get score board 
-    //start over resets the game but does NOT reload the page
+
     var randomQuestionIndex = Math.floor( Math.random() * questions.length);
     var chosenQuestion = questions[randomQuestionIndex] 
     
-function time() {
+function setTime() {
     clearInterval(intervalId);
     intervalId = setInterval(clock, 1000);
 }
 
-function gameTime() {
+function setgameTime() {
     clearInterval(intervalId);
-    intervalId = setInterval(game, 1000);
+    intervalId = setInterval(gameTime, 1000);
 }
 
 
-//update css- especially on buttons and out of time gif/message
-//check game timer
-//add more questions to array
-//fix restart button NOT hiding on new gae restart
+
 
 function reset()  {
 randomQuestionIndex = Math.floor( Math.random() * questions.length);
@@ -202,28 +196,28 @@ function stopClock(){
 }
 
 function newGame(){
-    correct = 0;
-    incorrect =0;
-    unanswered = 0;
+    var correct = 0;
+    var incorrect =0;
+    var unanswered = 0;
     time = 21;
     clockRunning = false;
     gameRunning = false;
-    gameTime = 30;
-    reset();
-    start();
-    time();
-    gameTime();
+    gameTime = 10;    
     $("#new").hide();
+    $(".conan").hide();
     $(".btn").show();
     $("#score").hide();
     $("#time").show();
     $("p").show();
-   
+    $("#question").show();
+    reset();
+    start();
+    setTime();
+    clock();
 }
 
 $("#new").on("click", function (){
     newGame();
-    $("#new").hide(); 
 });
 
 
@@ -235,7 +229,7 @@ function clock(){
     gameRunning = true;
     console.log("gametime when clock function is called is: " + gameTime)
     if (gameTime===0){
-        $("#score").html("This movie's over! Here's how you did!" + "<br>"+ "Right: " +  correct  + "<br>"+ "Wrong: " +  incorrect  +  + "<br>"+ "Unanswered: "  +  unanswered );
+        $("#score").html("This movie's over! Here's how you did!" + "<br>"+ "Right: " +  correct  + "<br>"+ "Wrong: " +  incorrect  +  "<br>" + "Unanswered: "  +  unanswered );
         $(".butn").hide();
         $("#score").show();
         $("#new").show();
@@ -272,6 +266,10 @@ function clock(){
     $("#time").hide();
     $(".score").hide();
     $("#new").hide();
+
+
+
+    
 
 var start = function (){
     if (!clockRunning) {

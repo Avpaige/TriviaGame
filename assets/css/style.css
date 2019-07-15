@@ -72,21 +72,6 @@ font-family: sans-serif;
 }
 
 
-#new{
-    height: 40px;
-    width:  200px;
-    font-size: 20px;
-    border-radius: 25px;     
-    background: radial-gradient(rgb(212, 185, 185), #aa9fdb75);
-    font-weight: bold;
-    color:blue;
-    top: -50px;
-    position: relative;
-    left: -350px;
-    margin-top: 100px;
-
-}
-
 #question{
     font-weight: bold;
     font-size: 18px;
@@ -156,15 +141,15 @@ p{
 }
 
 .conan {
-    padding-top: 20px;
     width: 400px;
     height: 200px;
     position: relative;
     padding: auto;
-    left: -350px;
+    margin-left: 250px;
     color: red;
     font-size: 20px;
-    left: -500px;
+    left: -275px;
+ 
 }
 
 #start{
@@ -186,7 +171,26 @@ p{
 #score{
     color: blue;
     font-size: 20px;
-    left: -600px;
+    position: relative;
     font-weight: bold;
+    text-align: center;
+    position: relative;
+    bottom: -40px;
+    right: 425px;
+    line-height: 25px;
 }
 
+#new{
+    height: 40px;
+    width:  200px;
+    font-size: 20px;
+    border-radius: 25px;     
+    background: radial-gradient(rgb(212, 185, 185), #aa9fdb75);
+    font-weight: bold;
+    color:blue;
+    top: -50px;
+    position: relative;
+    left: -340px;
+    margin-top: 100px;
+    
+}
