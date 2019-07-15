@@ -3,15 +3,14 @@ $(document).ready(function(){
     var correct = 0;
     var incorrect =0;
     var unanswered = 0;
-    var time = 21;
+    var time = 11;
     var intervalId;
     var clockRunning = false;
     var gameRunning = false;
     var outTime =  "You took too long to answer!";
-    var gameTime = 61;
+    var gameTime = 31;
     var delayReset;
-    var selected = [];
-
+   
     $(".gif").hide()
     $("#a").attr("data-value", "a");
     $("#b").attr("data-value", "b");
@@ -120,7 +119,7 @@ $(document).ready(function(){
 
             answer: "d",
             right: "Correct! 3 Days to Kill IS a movie but Bruce Willis isn't in it!",
-            wrong: "Wrong! Bruce Willis has been in a lot of movies, but not 3 Days to Kill!",
+            wrong: "Wrong! Bruce Willis was not in 3 Days to Kill!",
             gif:  "./assets/images/bruce.webp"
         },
 
@@ -157,7 +156,7 @@ $(document).ready(function(){
             d: "Kenny Baker",
 
             answer: "b",
-            right: "Correct! Brad Douriff was the original voice of our favorite kid pyschopath!",
+            right: "Correct! Brad Douriff was the original voice of our favorite toy pyschopath!",
             wrong: "Wrong! Until very recently Brad Dourif has been the original and long standing voice of Chucky!",
             gif:  "./assets/images/chucky.webp",
         },
@@ -170,7 +169,7 @@ $(document).ready(function(){
 
             answer: "d",
             right: "Correct! So far no one has tried to touch Alfred Hitchcock's classic!",
-            wrong: "Wrong! Alfred Hitchcock's The Birds is the only horror classic to remain untouched!",
+            wrong: "Wrong! Alfred Hitchcock's, The Birds is the only horror classic to remain untouched!",
             gif:  "./assets/images/birds.webp",
         },
 
@@ -239,7 +238,7 @@ randomQuestionIndex = Math.floor( Math.random() * questions.length);
     $("#c").text(chosenQuestion.c);
     $("#d").text(chosenQuestion.d);
     $(".butn").show();
-    time = 21;
+    time = 11;
     $("#time").show();
   }
 
@@ -264,10 +263,10 @@ function newGame(){
     correct = 0;
     incorrect =0;
     unanswered = 0;
-    time = 21;
+    time = 11;
     clockRunning = false;
     gameRunning = false;
-    gameTime = 61;    
+    gameTime = 31;    
     $("#new").hide();
     $(".conan").hide();
     $(".btn").show();
@@ -278,6 +277,7 @@ function newGame(){
     reset();
     start();
     setTime();
+    setgameTime();
     clock();
 }
 
@@ -332,6 +332,8 @@ function clock(){
     $(".score").hide();
     $("#new").hide();
     $("#slow").hide(); 
+    setTime();
+    setgameTime();
 
 $(".butn").on("click", function (){
        var response = $(this).attr("data-value");
@@ -380,9 +382,9 @@ var start = function (){
                     $(".start").hide();
                     $("#time").show();
 
-                  
+            console.log(gameTime) 
+           console.log (chosenQuestion)    
             });
-           console.log(gametime) 
-           console.log (chosenQuestion)
+     
 
 });
