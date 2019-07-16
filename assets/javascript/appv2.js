@@ -249,6 +249,7 @@ function stopClock(){
     gameRunning = false;
     clearInterval(intervalId);
     if (gameTime > 1){
+        clearTimeout (delayReset);
         delayReset = setTimeout (function(){
             reset();
             start();
